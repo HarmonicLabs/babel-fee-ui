@@ -85,6 +85,10 @@ export async function babelFeeTx(
 
     console.log("utxo ref: ", scriptRefInput.utxoRef.split("#")[0],  Number(scriptRefInput.utxoRef.split("#")[1]));
 
+    console.log("Policy ID: ", new Hash28(tokePlicyID));
+    console.log("TokenNameHex: "), fromHex(tokenNameHex);
+    console.log("Token Amount to Send: ", BigInt(tokenAmtToSend));
+    console.log("locelaces: ", resolvedBabelOut.value.lovelaces - BigInt(300000));
     try{
         const tx = txBuilder.buildSync({
             inputs: [
