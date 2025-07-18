@@ -75,10 +75,6 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
       console.error('No token selected');
       return;
     }
-    if (fee < 1000000) {
-      console.error('Fee must be at least 1 ADA (1,000,000 lovelaces)');
-      return;
-    }
     babelApi.postInput({ unit: tokenId, lovelacesFee: fee })
       .then(response => {
         console.log('Script ref input:', response);
@@ -120,7 +116,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
     const tokenId = token.policyHex + token.nameHex;
     setSelectedToken(tokenId);
     console.log('Selected token:', tokenId);
-    const fee = fees()[tokenId] || 0;
+    const fee = 300000// fees()[tokenId] || 0;
     getInput(tokenId, fee);
     getScriptInline();
     getScriptRefInput();
@@ -197,30 +193,80 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
                       />
                     </ListItem>
                     <ListItem sx={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                      <TextField
-                        label="Fee (Lovelaces)"
-                        type="number"
-                        size="small"
-                        value={fees()[tokenId] || ''}
-                        onChange={(e) => handleFeeChange(tokenId, e.currentTarget.value)}
-                        sx={{ width: '150px', marginRight: '16px' }}
-                        inputProps={{ min: 0 }}
-                      />
-                      <Button
-                        variant="contained"
-                        onClick={() => handleSelectedToken(token)}
-                        disabled={(fees()[tokenId] || 0) < 500000}
-                        sx={{
-                          bgcolor: (theme) => theme.palette.accent.main,
-                          color: 'white',
-                          '&:hover': {
+                        {/*
+                        <TextField
+                            label="Fee (Lovelaces)"
+                            type="number"
+                            size="small"
+                            value={fees()[tokenId] || ''}
+                            onChange={(e) => handleFeeChange(tokenId, e.currentTarget.value)}
+                            sx={{ width: '150px', marginRight: '16px' }}
+                            inputProps={{ min: 0 }}
+                        />
+                        */}
+                        <Button
+                            variant="contained"
+                            onClick={() => handleSelectedToken(token)}
+                            // disabled={(fees()[tokenId] || 0) < 500000}
+                            sx={{
                             bgcolor: (theme) => theme.palette.accent.main,
-                            opacity: 0.9,
-                          },
-                        }}
-                      >
+                            color: 'white',
+                            '&:hover': {
+                                bgcolor: (theme) => theme.palette.accent.main,
+                                opacity: 0.9,
+                            },
+                            }}
+                        >
                         Use Token
-                      </Button>
+                        </Button>
+                    </ListItem>
+                    <ListItem sx={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                        {input().redeemerDataHex && (
+                            <Box sx={{ mt: 2, p: 2, bgcolor: 'background.paper', borderRadius: '8px' }}>
+                            <Typography variant="h6" sx={{ color: (theme) => theme.palette.text.primary }}>
+                                Fee Details
+                            </Typography>
+                            <Typography variant="body2" sx={{ color: (theme) => theme.palette.energyOrange.main }}>
+                                The Fee will cost: {input().tokenAmount} ${toUtf8(fromHex(token.nameHex))} token
+                            </Typography>
+                            {
+                            /*
+                            <Typography variant="body2" sx={{ color: (theme) => theme.palette.energyOrange.main }}>
+                                Redeemer Data Hex: {input().redeemerDataHex.slice(0, 50)}...
+                            </Typography>
+
+                            <Typography variant="body2" sx={{ color: (theme) => theme.palette.energyOrange.main }}>
+                                UTXO Ref: {input().utxo.txOutRef}
+                            </Typography>
+                            <Typography variant="body2" sx={{ color: (theme) => theme.palette.energyOrange.main }}>
+                                Resolved CBOR Hex: {input().utxo.resolvedCborHex}
+                            </Typography>
+                            
+                            <Typography variant="body2" sx={{ color: (theme) => theme.palette.energyOrange.main }}>
+                                Redeemer Data Hex: {input().redeemerDataHex.slice(0, 50)}...}
+                            {input().expirationTime && (
+                                <Typography variant="body2" sx={{ color: (theme) => theme.palette.energyOrange.main }}>
+                                Expiration Time: {input().expirationTime}
+                                </Typography>
+                            )}
+                            */}
+                            <Button
+                                variant="contained"
+                                onClick={genBabelFeeTx}
+                                sx={{
+                                mt: 2,
+                                bgcolor: (theme) => theme.palette.accent.main,
+                                color: 'white',
+                                '&:hover': {
+                                    bgcolor: (theme) => theme.palette.accent.main,
+                                    opacity: 0.9,
+                                },
+                                }}
+                                >
+                                    Generate Babel Fee Transaction
+                                </Button>
+                            </Box>
+                        )}                      
                     </ListItem>
                   </>
                 );
@@ -232,45 +278,6 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
               </ListItem>
             )}
           </List>
-          {input().redeemerDataHex && (
-            <Box sx={{ mt: 2, p: 2, bgcolor: 'background.paper', borderRadius: '8px' }}>
-              <Typography variant="h6" sx={{ color: (theme) => theme.palette.text.primary }}>
-                Selected Input Details
-              </Typography>
-              <Typography variant="body2" sx={{ color: (theme) => theme.palette.energyOrange.main }}>
-                Redeemer Data Hex: {input().redeemerDataHex.slice(0, 50)}...
-              </Typography>
-              <Typography variant="body2" sx={{ color: (theme) => theme.palette.energyOrange.main }}>
-                Token Amount: {input().tokenAmount}
-              </Typography>
-              <Typography variant="body2" sx={{ color: (theme) => theme.palette.energyOrange.main }}>
-                UTXO Ref: {input().utxo.txOutRef}
-              </Typography>
-              <Typography variant="body2" sx={{ color: (theme) => theme.palette.energyOrange.main }}>
-                Resolved CBOR Hex: {input().utxo.resolvedCborHex}
-              </Typography>
-              {input().expirationTime && (
-                <Typography variant="body2" sx={{ color: (theme) => theme.palette.energyOrange.main }}>
-                  Expiration Time: {input().expirationTime}
-                </Typography>
-              )}
-              <Button
-                variant="contained"
-                onClick={genBabelFeeTx}
-                sx={{
-                  mt: 2,
-                  bgcolor: (theme) => theme.palette.accent.main,
-                  color: 'white',
-                  '&:hover': {
-                    bgcolor: (theme) => theme.palette.accent.main,
-                    opacity: 0.9,
-                  },
-                }}
-                >
-                    Generate Babel Fee Transaction
-                </Button>
-            </Box>
-          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
