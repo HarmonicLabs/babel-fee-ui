@@ -114,26 +114,7 @@ export async function babelFeeTx(
                 assetToSend,
                 input
             ],
-            outputs: [
-                new TxOut({
-                    address: resolvedBabelOut.address,
-                    value: Value.singleAsset(
-                        new Hash28(tokePlicyID),
-                        fromHex(tokenNameHex),
-                        BigInt(tokenAmtToSend)
-                    )
-                    /*
-                    Value.add(
-                        Value.singleAsset(
-                            new Hash28(tokePlicyID),
-                            fromHex(tokenNameHex),
-                            BigInt(tokenAmtToSend)
-                        ),
-                        Value.lovelaces( resolvedBabelOut.value.lovelaces - BigInt(300000) )
-                    )
-                    */
-                })
-            ],
+            outputs: [],
             // Hard coded for testing
             fee: BigInt(300000), // example fee
             collaterals: [ ...collaterals ],
