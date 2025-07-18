@@ -58,6 +58,9 @@ export async function babelFeeTx(
     if (!wallet) {
         throw new Error("No wallet found in localStorage");
     };
+
+    console.log("resolvedBabelOut: ", resolvedBabelOut.toJson() );
+
     
     const walletApi = await (window as any).cardano[JSON.parse(wallet).walletName].enable();
     console.log("walletApi: ", walletApi);
@@ -116,7 +119,7 @@ export async function babelFeeTx(
                         fromHex(tokenNameHex),
                         BigInt(tokenAmtToSend)
                     ),
-                    Value.lovelaces( resolvedBabelOut.value.lovelaces - BigInt(allowedAdaToSpend) )
+                    Value.lovelaces( resolvedBabelOut.value.lovelaces - BigInt(300000) )
                 )
             })
         ],
