@@ -117,7 +117,9 @@ export async function babelFeeTx(
             outputs: [
                 new TxOut({
                     address: resolvedBabelOut.address,
-                    value: Value.add(
+                    value: Value.lovelaces( resolvedBabelOut.value.lovelaces - BigInt(300000) )
+                    /*
+                    Value.add(
                         Value.singleAsset(
                             new Hash28(tokePlicyID),
                             fromHex(tokenNameHex),
@@ -125,6 +127,7 @@ export async function babelFeeTx(
                         ),
                         Value.lovelaces( resolvedBabelOut.value.lovelaces - BigInt(300000) )
                     )
+                    */
                 })
             ],
             // Hard coded for testing
