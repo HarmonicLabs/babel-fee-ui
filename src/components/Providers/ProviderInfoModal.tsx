@@ -209,7 +209,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
                       <Button
                         variant="contained"
                         onClick={() => handleSelectedToken(token)}
-                        disabled={(fees()[tokenId] || 0) < 1000000}
+                        disabled={(fees()[tokenId] || 0) < 500000}
                         sx={{
                           bgcolor: (theme) => theme.palette.accent.main,
                           color: 'white',

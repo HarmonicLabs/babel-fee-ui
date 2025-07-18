@@ -16,7 +16,8 @@
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
     "vite-plugin-node-polyfills": "^0.24.0",
-    "vite-plugin-solid": "^2.11.7"
+    "vite-plugin-solid": "^2.11.7",
+    "vite-plugin-top-level-await": "^1.5.0"
   },
   "dependencies": {
     "@harmoniclabs/blockfrost-pluts": "^0.2.4",
@@ -30,7 +31,6 @@
     "bip39": "^3.1.0",
     "cardano-wallet-connect-solidjs-component": "file:../cardano-wallet-connect-solidjs-component/cardano-wallet-connect-solidjs-component-0.0.3.tgz",
     "opbeta": "npm:open-props@^2.0.0-beta.5",
-    "solid-js": "^1.9.7",
-    "vite-plugin-top-level-await": "^1.5.0"
+    "solid-js": "^1.9.7"
   }
 }

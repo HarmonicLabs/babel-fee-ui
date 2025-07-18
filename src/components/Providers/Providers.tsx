@@ -23,29 +23,29 @@ const Providers: Component = () => {
 
   return (
     <>
-    <Grid container spacing={4} sx={{ marginTop: "20px" }}>
-    {
-      providers.map((provider, index) => (
-        <Grid item xs={6} md={6}>
-          <Card sx={{ height: '100%', boxShadow: '0 0 10px rgba(0, 255, 255, 0.3)', marginBottom: '20px' }}>
-            <CardContent>
-              <Typography variant="h5" component="div">
-                {provider.providerName}
-              </Typography>
+      <Grid container spacing={4} sx={{ marginTop: "20px" }}>
+      {
+        providers.map((provider, index) => (
+          <Grid item xs={6} md={6}>
+            <Card sx={{ height: '100%', boxShadow: '0 0 10px rgba(0, 255, 255, 0.3)', marginBottom: '20px' }}>
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  {provider.providerName}
+                </Typography>
+                <hr />
+                <Typography variant="body2" color="text.secondary">
+                  {provider.description}
+                </Typography>
+              </CardContent>
               <hr />
-              <Typography variant="body2" color="text.secondary">
-                {provider.description}
-              </Typography>
-            </CardContent>
-            <hr />
-            <CardActions>
-              <ProviderInfoModal providerName={provider.providerName} url={provider.url}/>
-            </CardActions>
-          </Card>
-        </Grid>
-      ))
-    }
-    </Grid>
+              <CardActions>
+                <ProviderInfoModal providerName={provider.providerName} url={provider.url}/>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))
+      }
+      </Grid>
     </>
   )
 };

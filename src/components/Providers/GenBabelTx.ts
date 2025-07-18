@@ -32,9 +32,9 @@ export async function babelFeeTx(
     expirationTime:number
 ) 
 {
-    console.log("script", script);
     const preprod_adaptedProtocolParams = adaptedProtocolParams as unknown as ProtocolParameters;
-    console.log("adaptedProtocolParams", defaultProtocolParameters)
+    // console.log("adaptedProtocolParams", defaultProtocolParameters)
+    
     const txBuilder = new TxBuilder(
         defaultProtocolParameters,
         {
@@ -44,13 +44,14 @@ export async function babelFeeTx(
     );
     const resolvedBabelOut = TxOut.fromCbor(resolvedCborHex);
     const resolvedRefScript = TxOut.fromCbor(scriptRefInput.resolvedHex);
-
+    
+    // console.log("script", script);
     // console.log(typeof resolvedBabelOut.value.lovelaces);
     // console.log(typeof allowedAdaToSpend);
     // console.log("exp time", expirationTime);
     // console.log("exp posix", txBuilder.posixToSlot(expirationTime));
     // console.log("date", Date.now());
-    console.log("tokePlicyID: ", fromHex(tokePlicyID));
+    // console.log("tokePlicyID: ", fromHex(tokePlicyID));
     // console.log("tokenNameHex: ", tokenNameHex);
 
     const wallet = localStorage.getItem("cardanoWallet");
@@ -81,13 +82,10 @@ export async function babelFeeTx(
     console.log("collaterals: ", collaterals);
 
     console.log("utxo ref: ", scriptRefInput.utxoRef.split("#")[0],  Number(scriptRefInput.utxoRef.split("#")[1]));
-    
 
-    
     const tx = txBuilder.buildSync({
         inputs: [
             {
-                /*
                 utxo: new UTxO({
                     utxoRef: { 
                         id: txOutRef.split("#")[0], 
@@ -95,23 +93,15 @@ export async function babelFeeTx(
                     },
                     resolved: resolvedBabelOut
                 }),
-                inputScript: {                    
-                    script: new Script(
-                        "PlutusScriptV3",
-                        fromHex(script)
-                    ),
-                    redeemer: redeemerDataHex
-                },
-                */
                 referenceScript: {
-                    redeemer: redeemerDataHex,
                     refUtxo: new UTxO({
                         utxoRef: {
-                            id: "e891b95ae73dded6ba2e1655af7de363c61f276bc97eddc0f2999079b24c62b1",
-                            index: 0
+                            id: scriptRefInput.utxoRef.split("#")[0], 
+                            index: Number(scriptRefInput.utxoRef.split("#")[1])
                         },
                         resolved: resolvedRefScript
-                    })
+                    }),
+                    redeemer: redeemerDataHex,
                 }
             },
             assetToSend,
@@ -119,21 +109,22 @@ export async function babelFeeTx(
         ],
         outputs: [
             new TxOut({
-                address: resolvedRefScript.address,
+                address: resolvedBabelOut.address,
                 value: Value.add(
                     Value.singleAsset(
                         new Hash28(tokePlicyID),
                         fromHex(tokenNameHex),
                         BigInt(tokenAmtToSend)
                     ),
-                    Value.lovelaces( resolvedRefScript.value.lovelaces - BigInt(allowedAdaToSpend) )
+                    Value.lovelaces( resolvedBabelOut.value.lovelaces - BigInt(allowedAdaToSpend) )
                 )
             })
         ],
         // Hard coded for testing
+        fee: BigInt(300000), // example fee
         collaterals: [ ...collaterals ],
         changeAddress: changeAddressBase,
-        invalidAfter: txBuilder.posixToSlot(expirationTime) // example expiration time
+        invalidAfter: txBuilder.posixToSlot(expirationTime)
     });
     
     console.log("tx", tx.toJson() );
