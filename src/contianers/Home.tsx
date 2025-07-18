@@ -13,7 +13,7 @@ const Home: Component<HomeProps> = (props) => {
       <Header themeMode={props.themeMode} setThemeMode={props.setThemeMode} />
       <Container sx={{ padding: "20px" }}>
         <Typography variant="h4" gutterBottom>
-          Select which provider you want to use to pay Babel fees with.
+          Select Babel fee provider
         </Typography>
         <Grid container spacing={4} sx={{ marginTop: "20px" }}>
           <Providers />
