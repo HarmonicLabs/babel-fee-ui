@@ -44,7 +44,9 @@ export async function babelFeeTx(
     );
     const resolvedBabelOut = TxOut.fromCbor(resolvedCborHex);
     const resolvedRefScript = TxOut.fromCbor(scriptRefInput.resolvedHex);
-    
+
+    console.log("resolvedBabelOut: ", resolvedBabelOut.toJson() );
+    console.log("resolvedBabelOut.value.lovelaces: ", resolvedBabelOut.value.lovelaces);
     // console.log("script", script);
     // console.log(typeof resolvedBabelOut.value.lovelaces);
     // console.log(typeof allowedAdaToSpend);
@@ -59,9 +61,6 @@ export async function babelFeeTx(
         throw new Error("No wallet found in localStorage");
     };
 
-    console.log("resolvedBabelOut: ", resolvedBabelOut.toJson() );
-
-    
     const walletApi = await (window as any).cardano[JSON.parse(wallet).walletName].enable();
     console.log("walletApi: ", walletApi);
     
@@ -86,55 +85,60 @@ export async function babelFeeTx(
 
     console.log("utxo ref: ", scriptRefInput.utxoRef.split("#")[0],  Number(scriptRefInput.utxoRef.split("#")[1]));
 
-    const tx = txBuilder.buildSync({
-        inputs: [
-            {
-                utxo: new UTxO({
-                    utxoRef: { 
-                        id: txOutRef.split("#")[0], 
-                        index: Number(txOutRef.split("#")[1])
-                    },
-                    resolved: resolvedBabelOut
-                }),
-                referenceScript: {
-                    refUtxo: new UTxO({
-                        utxoRef: {
-                            id: scriptRefInput.utxoRef.split("#")[0], 
-                            index: Number(scriptRefInput.utxoRef.split("#")[1])
+    try{
+        const tx = txBuilder.buildSync({
+            inputs: [
+                {
+                    utxo: new UTxO({
+                        utxoRef: { 
+                            id: txOutRef.split("#")[0], 
+                            index: Number(txOutRef.split("#")[1])
                         },
-                        resolved: resolvedRefScript
+                        resolved: resolvedBabelOut
                     }),
-                    redeemer: redeemerDataHex,
-                }
-            },
-            assetToSend,
-            input
-        ],
-        outputs: [
-            new TxOut({
-                address: resolvedBabelOut.address,
-                value: Value.add(
-                    Value.singleAsset(
-                        new Hash28(tokePlicyID),
-                        fromHex(tokenNameHex),
-                        BigInt(tokenAmtToSend)
-                    ),
-                    Value.lovelaces( resolvedBabelOut.value.lovelaces - BigInt(300000) )
-                )
-            })
-        ],
-        // Hard coded for testing
-        fee: BigInt(300000), // example fee
-        collaterals: [ ...collaterals ],
-        changeAddress: changeAddressBase,
-        invalidAfter: txBuilder.posixToSlot(expirationTime)
-    });
-    
-    console.log("tx", tx.toJson() );
-    
-    const signedTx = await walletApi.signTx(tx.toCbor().toString());
-    console.log("Signed transaction: ", signedTx);
-    console.log("Submitting transaction with hash: ", signedTx);
-    
-    return('OK');
+                    referenceScript: {
+                        refUtxo: new UTxO({
+                            utxoRef: {
+                                id: scriptRefInput.utxoRef.split("#")[0], 
+                                index: Number(scriptRefInput.utxoRef.split("#")[1])
+                            },
+                            resolved: resolvedRefScript
+                        }),
+                        redeemer: redeemerDataHex,
+                    }
+                },
+                assetToSend,
+                input
+            ],
+            outputs: [
+                new TxOut({
+                    address: resolvedBabelOut.address,
+                    value: Value.add(
+                        Value.singleAsset(
+                            new Hash28(tokePlicyID),
+                            fromHex(tokenNameHex),
+                            BigInt(tokenAmtToSend)
+                        ),
+                        Value.lovelaces( resolvedBabelOut.value.lovelaces - BigInt(300000) )
+                    )
+                })
+            ],
+            // Hard coded for testing
+            fee: BigInt(300000), // example fee
+            collaterals: [ ...collaterals ],
+            changeAddress: changeAddressBase,
+            invalidAfter: txBuilder.posixToSlot(expirationTime)
+        });
+        
+        console.log("tx", tx.toJson() );
+        
+        const signedTx = await walletApi.signTx(tx.toCbor().toString());
+        console.log("Signed transaction: ", signedTx);
+        console.log("Submitting transaction with hash: ", signedTx);
+        
+        return('OK');
+    }catch(error) {
+        console.log("Error building transaction: ", error);
+        // throw error;
+    }
 };
