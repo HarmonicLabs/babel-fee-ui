@@ -18,7 +18,7 @@ const Providers: Component = () => {
 
   return (
     <>
-      <Grid container spacing={4} sx={{ marginTop: "20px" }}>:w
+      <Grid container spacing={4} sx={{ marginTop: "20px" }}>
       {
         providers.map((provider, index) => (
           <Grid item xs={6} md={6}>

@@ -14,7 +14,7 @@ const Header: Component<HeaderProps> = (props) => {
     <AppBar position="static" color="default">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Babel Providers
+          Babel Providers Demo
         </Typography>
         <Box sx={{ display: "flex", gap: "10px" }}>
 			<Button color="inherit" component={A} href="/">

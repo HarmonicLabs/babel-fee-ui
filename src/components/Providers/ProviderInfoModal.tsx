@@ -193,9 +193,9 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
                       />
                     </ListItem>
                     <ListItem sx={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                        
+                        Optional Custom Fee:
                         <TextField
-                            label="Fee (Lovelaces)"
+                            label="(Lovelaces)"
                             type="number"
                             size="small"
                             value={fees()[tokenId] || ''}
@@ -203,18 +203,18 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
                             sx={{ width: '150px', marginRight: '16px' }}
                             inputProps={{ min: 0 }}
                         />
-                        
+                        <hr />
                         <Button
                             variant="contained"
                             onClick={() => handleSelectedToken(token)}
                             // disabled={(fees()[tokenId] || 0) < 500000}
                             sx={{
-                            bgcolor: (theme) => theme.palette.accent.main,
-                            color: 'white',
-                            '&:hover': {
                                 bgcolor: (theme) => theme.palette.accent.main,
-                                opacity: 0.9,
-                            },
+                                color: 'white',
+                                '&:hover': {
+                                    bgcolor: (theme) => theme.palette.accent.main,
+                                    opacity: 0.9,
+                                },
                             }}
                         >
                         Use Token
