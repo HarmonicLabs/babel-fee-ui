@@ -7,7 +7,7 @@ const providers = [
   {
     providerName: 'Harmonic Babel Provider',
     description: 'We provide a Babel provider that allows you to pay fees in Cardano native tokens.',
-    url: 'http://localhost:3000',
+    url: 'https://babelfeesapi.onchainapps.io',
   },
   {
     providerName: 'Bakon Babel Provider',
@@ -23,7 +23,7 @@ const Providers: Component = () => {
 
   return (
     <>
-      <Grid container spacing={4} sx={{ marginTop: "20px" }}>
+      <Grid container spacing={4} sx={{ marginTop: "20px" }}>:w
       {
         providers.map((provider, index) => (
           <Grid item xs={6} md={6}>
