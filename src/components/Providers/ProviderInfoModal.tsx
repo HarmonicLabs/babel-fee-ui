@@ -116,7 +116,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
     const tokenId = token.policyHex + token.nameHex;
     setSelectedToken(tokenId);
     console.log('Selected token:', tokenId);
-    const fee = 300000// fees()[tokenId] || 0;
+    const fee = fees()[tokenId] || 300000;
     getInput(tokenId, fee);
     getScriptInline();
     getScriptRefInput();
@@ -193,7 +193,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
                       />
                     </ListItem>
                     <ListItem sx={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                        {/*
+                        
                         <TextField
                             label="Fee (Lovelaces)"
                             type="number"
@@ -203,7 +203,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
                             sx={{ width: '150px', marginRight: '16px' }}
                             inputProps={{ min: 0 }}
                         />
-                        */}
+                        
                         <Button
                             variant="contained"
                             onClick={() => handleSelectedToken(token)}
