@@ -1,6 +1,7 @@
-import { TxBuilder, TxOut, UTxO, defaultProtocolParameters, defaultPreprodGenesisInfos, ProtocolParameters, fromHex, Value, Hash28, Script, Credential, Address } from "@harmoniclabs/buildooor";
+import { TxBuilder, TxOut, UTxO, defaultProtocolParameters, defaultPreprodGenesisInfos, ProtocolParameters, fromHex, Value, Hash28, Script, Credential, Address, toHex } from "@harmoniclabs/buildooor";
 import { blockfrostPreProd } from "../../utils/blockfrost";
 import adaptedProtocolParams from "./blockfrost-like.protocolParams.preprod.json";
+import { getUtxosWithNeededAssets, countTokenQuantity } from "../../utils/utxoAssetTools";
 
 /*
 {
@@ -18,6 +19,19 @@ interface RefInput {
     utxoRef: string;
     resolvedHex: string;
 };
+interface Asset {
+    name: Uint8Array;
+    quantity: string;
+};
+interface Policy {
+    policy: Uint8Array;
+    assets: Asset[];
+};
+interface Resolved {
+    value: Value;
+    address: string;
+};
+// Remove local Utxo interface to use the one from @harmoniclabs/buildooor
 
 export async function babelFeeTx(
     redeemerDataHex: string,
@@ -26,7 +40,7 @@ export async function babelFeeTx(
     script: string,
     scriptRefInput: RefInput,
     allowedAdaToSpend: number,
-    tokePlicyID: string,
+    tokenPlicyID: string,
     tokenNameHex: string,
     tokenAmtToSend: number,
     expirationTime:number
@@ -73,19 +87,18 @@ export async function babelFeeTx(
     const parsedUtxos = utxos.map((u: any) => (UTxO.fromCbor(u)));
     console.log("parsedUtxos: ", parsedUtxos);
     
+    const assetToSend: UTxO[] = await getUtxosWithNeededAssets( parsedUtxos, tokenPlicyID, tokenNameHex );
+    console.log("assetToSend: ", assetToSend);
+
     const input = parsedUtxos.find((u: any) => u.resolved.value.lovelaces > 5_000_000)
     console.log("input: ", input);
-
-    const assetToSend = parsedUtxos.find((u: any) => u.resolved.value.map.find((a: any) => a.policy.toString() === tokePlicyID ) !== undefined);
-    console.log("assetToSend: ", assetToSend);
-    
 
     const collaterals = await walletApi.getCollateral();
     console.log("collaterals: ", collaterals);
 
     console.log("utxo ref: ", scriptRefInput.utxoRef.split("#")[0],  Number(scriptRefInput.utxoRef.split("#")[1]));
 
-    console.log("Policy ID: ", new Hash28(tokePlicyID));
+    console.log("Policy ID: ", new Hash28(tokenPlicyID));
     console.log("TokenNameHex: ", fromHex(tokenNameHex));
     console.log("Token Amount to Send: ", BigInt(tokenAmtToSend));
     console.log("locelaces: ", resolvedBabelOut.value.lovelaces - BigInt(300000));
@@ -111,7 +124,7 @@ export async function babelFeeTx(
                         redeemer: redeemerDataHex,
                     }
                 },
-                assetToSend,
+                ...assetToSend,
                 input
             ],
             outputs: [
@@ -120,7 +133,7 @@ export async function babelFeeTx(
                     value: 
                     Value.add(
                         Value.singleAsset(
-                            new Hash28(tokePlicyID),
+                            new Hash28(tokenPlicyID),
                             fromHex(tokenNameHex),
                             BigInt(tokenAmtToSend)
                         ),
