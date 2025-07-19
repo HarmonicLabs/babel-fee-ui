@@ -170,10 +170,21 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
             input().expirationTime || Date.now() + 3600000 // Default to 1 hour from now
         )
         .then(tx => {
-        console.log('Generated Babel Fee Transaction:', tx);
+            console.log('Tx Send:', tx);
+            tx === "ok" ? alert("Transaction successfully generated, if you don't have auto submit enabled in your wallet please make sure you manualy submit it") : alert("Error generating transaction");
+            tx === "ok" && setInput(
+                {
+                    redeemerDataHex: '',
+                    tokenAmount: 0,
+                    utxo: {
+                        resolvedCborHex: '',
+                        txOutRef: ''
+                    }
+                }
+            ); // Refresh wallet assets if transaction is successful
         })
         .catch(error => {
-        console.error('Error generating Babel Fee Transaction:', error);
+            console.error('Error generating Babel Fee Transaction:', error);
         });
     };
 

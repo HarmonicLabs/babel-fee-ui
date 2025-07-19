@@ -152,11 +152,9 @@ export async function babelFeeTx(
         
         const signedTx = await walletApi.signTx(tx.toCbor().toString());
         console.log("Signed transaction: ", signedTx);
-        console.log("Submitting transaction with hash: ", signedTx);
-        
-        return('OK');
+        return('ok');
     }catch(error) {
         console.log("Error building transaction: ", error);
-        // throw error;
+        return("error");
     }
 };
