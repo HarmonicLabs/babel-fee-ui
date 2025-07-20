@@ -58,17 +58,7 @@ export async function babelFeeTx(
     );
     const resolvedBabelOut = TxOut.fromCbor(resolvedCborHex);
     const resolvedRefScript = TxOut.fromCbor(scriptRefInput.resolvedHex);
-
-    console.log("resolvedBabelOut: ", resolvedBabelOut.toJson() );
-    console.log("resolvedBabelOut.value.lovelaces: ", resolvedBabelOut.value.lovelaces);
-    // console.log("script", script);
-    // console.log(typeof resolvedBabelOut.value.lovelaces);
-    // console.log(typeof allowedAdaToSpend);
-    // console.log("exp time", expirationTime);
-    // console.log("exp posix", txBuilder.posixToSlot(expirationTime));
-    // console.log("date", Date.now());
-    // console.log("tokePlicyID: ", fromHex(tokePlicyID));
-    // console.log("tokenNameHex: ", tokenNameHex);
+    const txFee = BigInt(350000);
 
     const wallet = localStorage.getItem("cardanoWallet");
     if (!wallet) {
@@ -76,32 +66,27 @@ export async function babelFeeTx(
     };
 
     const walletApi = await (window as any).cardano[JSON.parse(wallet).walletName].enable();
-    console.log("walletApi: ", walletApi);
+    //console.log("walletApi: ", walletApi);
     
     const changeAddressPkh = await walletApi.getChangeAddress();
     const changeAddressBase = Address.fromBytes(fromHex(changeAddressPkh)).toString()
-    console.log("changeAddress: ", changeAddressBase);
+    //console.log("changeAddress: ", changeAddressBase);
 
     const utxos = await walletApi.getUtxos();
     
     const parsedUtxos = utxos.map((u: any) => (UTxO.fromCbor(u)));
-    console.log("parsedUtxos: ", parsedUtxos);
+    //console.log("parsedUtxos: ", parsedUtxos);
     
     const assetToSend: UTxO[] = await getUtxosWithNeededAssets( parsedUtxos, tokenPlicyID, tokenNameHex );
-    console.log("assetToSend: ", assetToSend);
+    //console.log("assetToSend: ", assetToSend);
 
     const input = parsedUtxos.find((u: any) => u.resolved.value.lovelaces > 5_000_000)
     console.log("input: ", input);
 
     const collaterals = await walletApi.getCollateral();
-    console.log("collaterals: ", collaterals);
+    //console.log("collaterals: ", collaterals);
+    //console.log("utxo ref: ", scriptRefInput.utxoRef.split("#")[0],  Number(scriptRefInput.utxoRef.split("#")[1]));
 
-    console.log("utxo ref: ", scriptRefInput.utxoRef.split("#")[0],  Number(scriptRefInput.utxoRef.split("#")[1]));
-
-    console.log("Policy ID: ", new Hash28(tokenPlicyID));
-    console.log("TokenNameHex: ", fromHex(tokenNameHex));
-    console.log("Token Amount to Send: ", BigInt(tokenAmtToSend));
-    console.log("locelaces: ", resolvedBabelOut.value.lovelaces - BigInt(300000));
     try{
         const tx = txBuilder.buildSync({
             inputs: [
@@ -137,21 +122,21 @@ export async function babelFeeTx(
                             fromHex(tokenNameHex),
                             BigInt(tokenAmtToSend)
                         ),
-                        Value.lovelaces( resolvedBabelOut.value.lovelaces - BigInt(300000) )
+                        Value.lovelaces( resolvedBabelOut.value.lovelaces )
                     )
                 })
             ],
             // Hard coded for testing
-            fee: BigInt(300000), // example fee
-            collaterals: [ ...collaterals ],
+            // fee: BigInt(txFee), // example fee
+            collaterals: [ collaterals[0] ],
             changeAddress: changeAddressBase,
             invalidAfter: txBuilder.posixToSlot(expirationTime)
         });
-        
-        console.log("tx", tx.toJson() );
-        
+               
         const signedTx = await walletApi.signTx(tx.toCbor().toString());
-        console.log("Signed transaction: ", signedTx);
+        console.log("Signed Tx: ", signedTx);
+        console.log("tx: ", tx);
+        console.log("Signed Tx: ", tx.toCbor().toString());
         return('ok');
     }catch(error) {
         console.log("Error building transaction: ", error);
