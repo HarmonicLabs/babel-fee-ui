@@ -1,6 +1,6 @@
 import { createSignal, Component, For } from 'solid-js';
 import { makePersisted } from '@solid-primitives/storage';
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, List, ListItem, Box, Typography, Card, CardContent } from '@suid/material';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, List, ListItem, Box, Typography, Card, CardContent, Alert, AlertTitle, Stack } from '@suid/material';
 import BabelApiClient from '../../utils/babelApi';
 import { toUtf8, fromHex, UTxO } from '@harmoniclabs/buildooor';
 import { babelFeeTx } from './GenBabelTx';
@@ -50,6 +50,14 @@ interface AssetCount {
 
 export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
   const [open, setOpen] = createSignal(false);
+  const [alert, setAlert ]= createSignal<{
+    show: boolean;
+    type: 'success' | 'error' | 'warning' | 'info';
+  }>({
+        show: false,
+        type: 'success'
+    }
+  )
   const [tokens, setTokens] = createSignal<Token[]>([]);
   const [fees, setFees] = createSignal<Record<string, number>>({});
   const [walletAssets, setWalletAssets] = createSignal<AssetCount[]>([]);
@@ -73,6 +81,16 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
   });
 
   const [enabled, setEnabled ] = createSignal<boolean>(false);
+
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+  
+  const formatNumber = (value: number | bigint): string => {
+    return formatter.format(value);
+  };
 
   const babelApi = new BabelApiClient(props.url);
 
@@ -194,8 +212,10 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
     )
       .then(tx => {
         console.log('Tx Send:', tx);
-        tx === "ok" ? alert("Transaction successfully generated, if you don't have auto submit enabled in your wallet please make sure you manually submit it") : alert("Error generating transaction");
-        tx === "ok" && setInput({
+        if (tx.status && ['success', 'error', 'warning', 'info'].includes(tx.status)) {
+          setAlert({ show: true, type: tx.status as 'success' | 'error' | 'warning' | 'info' });
+        }
+        tx.status === "success" && setInput({
           redeemerDataHex: '',
           tokenAmount: 0,
           utxo: {
@@ -279,6 +299,8 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
           }}
         >
           {props.providerName}
+          <Stack sx={{ width: "100%" }} spacing={2}>
+        </Stack>
         </DialogTitle>
         <DialogContent sx={{ padding: '24px' }}>
           <DialogContentText
@@ -325,7 +347,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
                         </Typography>
                         <Box sx={{ width: '100%', textAlign: 'center' }}>
                           <Typography variant="body1" sx={{ fontWeight: 500, marginBottom: '8px' }}>
-                            Fee: {fees()[tokenId] || DEFAULT_TX_FEE} Lovelaces
+                            Fee: {formatNumber(fees()[tokenId]) || formatNumber(DEFAULT_TX_FEE)} Lovelaces
                           </Typography>
                           <Slider
                             min={350000}
@@ -344,7 +366,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
                                 marginBottom: '12px',
                               }}
                             >
-                              Fee Cost: {input().tokenAmount} {toUtf8(fromHex(token.nameHex))} (Owned: {token.ownedAmount?.toString() ?? '0'})
+                              Fee Cost: {formatNumber(input().tokenAmount)} {toUtf8(fromHex(token.nameHex))} (Owned: {formatNumber(token.ownedAmount ?? 0n)})
                             </Typography>
                             <Button
                               disabled={(token.ownedAmount ?? 0n) < input().tokenAmount || enabled() === false}
@@ -403,6 +425,16 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
             Close
           </Button>
         </DialogActions>
+        {alert().show && (
+          <Alert
+            severity={alert().type}
+            onClose={() => setAlert({ show: false, type: 'success' })}
+            sx={{ position: 'absolute', top: 16, left: '50%', transform: 'translateX(-50%)', width: '80%' }}
+          >
+            <AlertTitle>{alert().type === 'success' ? 'Success' : 'Error'}</AlertTitle>
+            {alert().type === 'success' ? 'Transaction successfully generated!' : 'There was an error generating the transaction.'}
+          </Alert>
+        )}
       </Dialog>
     </div>
   );

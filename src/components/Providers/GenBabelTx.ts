@@ -129,9 +129,15 @@ export async function babelFeeTx(
         console.log("Signed Tx: ", signedTx);
         console.log("tx: ", tx);
         console.log("Signed Tx: ", tx.toCbor().toString());
-        return('ok');
+        return({
+            status: "success",
+            message: "Transaction built successfully",
+        });
     }catch(error) {
         console.log("Error building transaction: ", error);
-        return("error");
+        return({
+            status: "error",
+            message: error
+        });
     }
 };
