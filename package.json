@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@harmoniclabs/blockfrost-pluts": "^0.2.4",
-    "@harmoniclabs/buildooor": "0.1.14",
+    "@harmoniclabs/buildooor": "^0.1.16",
     "@lucid-evolution/lucid": "^0.4.29",
     "@solidjs/router": "^0.15.3",
     "@suid/css": "^0.4.1",

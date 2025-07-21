@@ -27,7 +27,7 @@ export async function babelFeeTx(
     resolvedCborHex: string,
     script: string,
     scriptRefInput: RefInput,
-    allowedAdaToSpend: number,
+    fee: number,
     tokenPlicyID: string,
     tokenNameHex: string,
     tokenAmtToSend: number,
@@ -36,7 +36,7 @@ export async function babelFeeTx(
 {
     const preprod_adaptedProtocolParams = adaptedProtocolParams as unknown as ProtocolParameters;
     // console.log("adaptedProtocolParams", defaultProtocolParameters)
-    
+    console.log("fee:, ",  fee );
     const txBuilder = new TxBuilder(
         defaultProtocolParameters,
         {
@@ -79,7 +79,7 @@ export async function babelFeeTx(
     const outValue = Value.add(
         Value.sub(
             resolvedBabelOut.value,
-            Value.lovelaces( BigInt(allowedAdaToSpend)  ),
+            Value.lovelaces( BigInt(fee)  ),
         ),
         Value.singleAsset(
             new Hash28(tokenPlicyID),
@@ -120,7 +120,7 @@ export async function babelFeeTx(
                 })
             ],
             // Hard coded for testing
-            // fee: BigInt(txFee), // example fee
+            fee: BigInt(fee-30000), // example fee
             collaterals: [ collaterals[0] ],
             changeAddress: changeAddressBase,
             invalidAfter: txBuilder.posixToSlot(expirationTime)
