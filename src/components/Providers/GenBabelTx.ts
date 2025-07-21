@@ -88,10 +88,6 @@ export async function babelFeeTx(
         ),
     );
 
-    console.log({ allowedAdaToSpend })
-    console.log( JSON.stringify( resolvedBabelOut.value, undefined, 2 ))
-    console.log( JSON.stringify( outValue, undefined, 2 ))
-
     try{
         const tx = txBuilder.buildSync({
             inputs: [
@@ -115,7 +111,7 @@ export async function babelFeeTx(
                     }
                 },
                 ...assetToSend,
-                input
+                // input
             ],
             outputs: [
                 new TxOut({
