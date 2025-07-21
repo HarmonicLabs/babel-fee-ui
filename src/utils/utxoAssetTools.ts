@@ -94,7 +94,6 @@ export const assetsOwned = (assetCounts: Assets, availableTokens: AvailableToken
         ownedAmount,
       };
     });
-  
     // console.log("Merged Tokens:", mergedTokens);
     return mergedTokens;
 };

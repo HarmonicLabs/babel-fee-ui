@@ -110,8 +110,7 @@ export async function babelFeeTx(
                         redeemer: redeemerDataHex,
                     }
                 },
-                ...assetToSend,
-                // input
+                ...assetToSend
             ],
             outputs: [
                 new TxOut({
