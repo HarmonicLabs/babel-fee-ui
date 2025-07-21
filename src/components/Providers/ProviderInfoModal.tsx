@@ -223,6 +223,9 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
             txOutRef: ''
           }
         });
+        setTimeout(() => {
+          setAlert({ show: false, type: 'success' });
+        }, 5000);
       })
       .catch(error => {
         console.error('Error generating Babel Fee Transaction:', error);
