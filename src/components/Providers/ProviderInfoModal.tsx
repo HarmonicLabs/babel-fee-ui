@@ -53,9 +53,13 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
   const [alert, setAlert ]= createSignal<{
     show: boolean;
     type: 'success' | 'error' | 'warning' | 'info';
+    message: string | {
+        message: string | undefined;
+    };
   }>({
         show: false,
-        type: 'success'
+        type: 'success',
+        message: ''
     }
   )
   const [tokens, setTokens] = createSignal<Token[]>([]);
@@ -213,7 +217,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
       .then(tx => {
         console.log('Tx Send:', tx);
         if (tx.status && ['success', 'error', 'warning', 'info'].includes(tx.status)) {
-          setAlert({ show: true, type: tx.status as 'success' | 'error' | 'warning' | 'info' });
+          setAlert({ show: true, type: tx.status as 'success' | 'error' | 'warning' | 'info', message: typeof tx.message === 'string' ? tx.message : (tx.message as any)?.message || ''});
         }
         tx.status === "success" && setInput({
           redeemerDataHex: '',
@@ -224,7 +228,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
           }
         });
         setTimeout(() => {
-          setAlert({ show: false, type: 'success' });
+          setAlert({ show: false, type: 'success', message: '' });
         }, 5000);
       })
       .catch(error => {
@@ -285,7 +289,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
             background: (theme) => theme.palette.mode === 'dark' ? '#1a1a2e' : '#ffffff',
             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
             padding: '16px',
-            maxWidth: '500px',
+            maxWidth: '600px',
             margin: 'auto',
           },
         }}
@@ -431,11 +435,11 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
         {alert().show && (
           <Alert
             severity={alert().type}
-            onClose={() => setAlert({ show: false, type: 'success' })}
-            sx={{ position: 'absolute', top: 16, left: '50%', transform: 'translateX(-50%)', width: '80%' }}
+            onClose={() => setAlert({ show: false, type: 'success', message: '' })}
+            sx={{ position: 'absolute', top: 16, left: '50%', transform: 'translateX(-50%)', width: '90%' }}
           >
             <AlertTitle>{alert().type === 'success' ? 'Success' : 'Error'}</AlertTitle>
-            {alert().type === 'success' ? 'Transaction successfully generated!' : 'There was an error generating the transaction.'}
+            {alert().message}
           </Alert>
         )}
       </Dialog>
