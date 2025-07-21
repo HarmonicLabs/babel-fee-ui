@@ -87,6 +87,8 @@ export async function babelFeeTx(
     //console.log("collaterals: ", collaterals);
     //console.log("utxo ref: ", scriptRefInput.utxoRef.split("#")[0],  Number(scriptRefInput.utxoRef.split("#")[1]));
 
+    console.log("resolvedBabelOut.value.lovelaces: ", resolvedBabelOut.value.lovelaces)
+
     try{
         const tx = txBuilder.buildSync({
             inputs: [
@@ -110,7 +112,7 @@ export async function babelFeeTx(
                     }
                 },
                 ...assetToSend,
-                input
+                // input
             ],
             outputs: [
                 new TxOut({
@@ -127,7 +129,7 @@ export async function babelFeeTx(
                 })
             ],
             // Hard coded for testing
-            // fee: BigInt(txFee), // example fee
+            fee: BigInt(txFee), // example fee
             collaterals: [ collaterals[0] ],
             changeAddress: changeAddressBase,
             invalidAfter: txBuilder.posixToSlot(expirationTime)
