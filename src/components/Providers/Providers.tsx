@@ -8,6 +8,7 @@ const providers = [
     providerName: 'Harmonic Babel Provider',
     description: 'We provide a Babel fee service that allows you to pay fees in Cardano native tokens.',
     url: 'https://babelfeesapi.onchainapps.io',
+    // url: "http://localhost:3000",
   }
   // Add more providers as needed
 ];
