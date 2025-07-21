@@ -5,6 +5,7 @@ import BabelApiClient from '../../utils/babelApi';
 import { toUtf8, fromHex, UTxO } from '@harmoniclabs/buildooor';
 import { babelFeeTx } from './GenBabelTx';
 import { countTokenQuantity, assetsOwned } from '../../utils/utxoAssetTools';
+import { DEFAULT_TX_FEE } from '../constants';
 
 interface Token {
   policyHex: string;
@@ -137,7 +138,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
         const tokenId = token.policyHex + token.nameHex;
         setSelectedToken(tokenId);
         console.log('Selected token:', tokenId);
-        const fee = fees()[tokenId] || 300000;
+        const fee = fees()[tokenId] || DEFAULT_TX_FEE;
         getInput(tokenId, fee);
         getScriptInline();
         getScriptRefInput();
@@ -147,7 +148,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
         const tokenId = selectedToken();
         const tokenPolicyId = selectedToken().slice(0, 56); // First 56 characters for policy ID
         const tokenNameHex = selectedToken().slice(56); // Remaining characters for token name 
-        const fee = fees()[tokenId] || 0;
+        const fee = fees()[tokenId] || DEFAULT_TX_FEE;
         
         // console.log("tokenPolicyId:", tokenPolicyId);
         // console.log("tokenNameHex:", tokenNameHex);

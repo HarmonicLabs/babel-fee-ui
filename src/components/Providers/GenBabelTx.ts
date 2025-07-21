@@ -46,7 +46,6 @@ export async function babelFeeTx(
     );
     const resolvedBabelOut = TxOut.fromCbor(resolvedCborHex);
     const resolvedRefScript = TxOut.fromCbor(scriptRefInput.resolvedHex);
-    const txFee = BigInt(350000);
 
     const wallet = localStorage.getItem("cardanoWallet");
     if (!wallet) {
@@ -77,6 +76,22 @@ export async function babelFeeTx(
 
     console.log("resolvedBabelOut.value.lovelaces: ", resolvedBabelOut.value.lovelaces)
 
+    const outValue = Value.add(
+        Value.sub(
+            resolvedBabelOut.value,
+            Value.lovelaces( BigInt(allowedAdaToSpend)  ),
+        ),
+        Value.singleAsset(
+            new Hash28(tokenPlicyID),
+            fromHex(tokenNameHex),
+            BigInt(tokenAmtToSend)
+        ),
+    );
+
+    console.log({ allowedAdaToSpend })
+    console.log( JSON.stringify( resolvedBabelOut.value, undefined, 2 ))
+    console.log( JSON.stringify( outValue, undefined, 2 ))
+
     try{
         const tx = txBuilder.buildSync({
             inputs: [
@@ -105,15 +120,7 @@ export async function babelFeeTx(
             outputs: [
                 new TxOut({
                     address: resolvedBabelOut.address,
-                    value: 
-                    Value.add(
-                        Value.singleAsset(
-                            new Hash28(tokenPlicyID),
-                            fromHex(tokenNameHex),
-                            BigInt(tokenAmtToSend)
-                        ),
-                        Value.lovelaces( resolvedBabelOut.value.lovelaces )
-                    )
+                    value: outValue
                 })
             ],
             // Hard coded for testing
