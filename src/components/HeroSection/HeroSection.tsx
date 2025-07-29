@@ -49,7 +49,17 @@ const HeroSection: Component = () => {
           overflow: 'hidden',
         }}
       >
-        <ThreeCoinScene />
+                    <Box sx={{ 
+                        width: '40px', 
+                        height: '40px', 
+                        backgroundColor: theme.palette.mode === "light" ? "#F1F1F1" : "#000000", 
+                        border:"1px solid #FF0000",
+                        boxShadow: "0 0 10px 5px rgba(255, 0, 0, 0.7)",
+                        marginBottom: '10px', 
+                        backgroundImage: `url('https://www.harmoniclabs.tech/assets/logo/HarmonicLogoRedStrokeTransparentBg.svg')`,
+                        borderRadius: "50%",
+                      }} 
+              /> 
       </Box>
     </Box>
   );
