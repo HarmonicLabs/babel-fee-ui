@@ -3,7 +3,7 @@ import { Container, Grid, Box } from '@suid/material';
 import Header from '../components/Header/Header';
 import ProviderCardsSection from '../components/ProviderCardsSection/ProviderCardsSection';
 import AnnouncementBanner from '../components/ProviderCardsSection/AnnouncementBanner';
-import Footer from '../components/Template/Footer';
+import Footer from '../components/Footer/Footer';
 
 interface HomeProps {
   themeMode: () => 'dark' | 'light';

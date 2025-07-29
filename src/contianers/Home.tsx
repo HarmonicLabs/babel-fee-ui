@@ -3,7 +3,7 @@ import {  Box } from '@suid/material';
 import Header from '../components/Header/Header';
 import HeroSection from '../components/HeroSection/HeroSection';
 import ProviderCardsSection from '../components/ProviderCardsSection/ProviderCardsSection';
-import Footer from '../components/Template/Footer';
+import Footer from '../components/Footer/Footer';
 
 interface HomeProps {
   themeMode: () => 'dark' | 'light';
