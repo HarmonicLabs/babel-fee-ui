@@ -1,5 +1,5 @@
 import { Component, For } from 'solid-js';
-import { Grid, Card, CardContent, Typography, Box, useTheme } from '@suid/material';
+import { Grid, Card, CardContent, Typography, Box, useTheme, CardActions } from '@suid/material';
 import { ProviderInfoModal } from './ProviderInfoModal';
 
 const ProviderCardsSection: Component = () => {
@@ -44,6 +44,9 @@ const ProviderCardsSection: Component = () => {
                       {provider.description}
                     </Typography>
                   </CardContent>
+                  <CardActions>
+                    <ProviderInfoModal providerName={provider.providerName} url={provider.url}/>
+                  </CardActions>
                 </Card>
             </Grid>
           )}

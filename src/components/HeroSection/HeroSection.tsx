@@ -28,6 +28,7 @@ const HeroSection: Component = () => {
         <Typography variant="body1" align="left" gutterBottom>
           Smart Contracts Powering Efficient Babel Fee Transactions
         </Typography>
+        {/*
         <Box sx={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
           <Button variant="contained" color="primary" size="large">
             Get Started
@@ -36,6 +37,7 @@ const HeroSection: Component = () => {
             API
           </Button>
         </Box>
+        */}
       </Box>
       <Box
         sx={{
