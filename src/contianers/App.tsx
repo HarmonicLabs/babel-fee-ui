@@ -4,6 +4,8 @@ import { ThemeProvider, CssBaseline, Typography } from "@suid/material";
 import { makePersisted } from "@solid-primitives/storage";
 import { darkTheme, lightTheme } from "../theme";
 import Home from "./Home";
+import Demo from "./Demo";
+import Template from './Template';
 
 const App: Component = () => {
   const [themeMode, setThemeMode] = makePersisted(
@@ -25,6 +27,18 @@ const App: Component = () => {
           path="/"
           component={() => (
             <Home themeMode={themeMode} setThemeMode={setThemeMode} />
+          )}
+        />
+        <Route
+          path="/demo"
+          component={() => (
+            <Demo themeMode={themeMode} setThemeMode={setThemeMode} />
+          )}
+        />
+        <Route
+          path="/template"
+          component={() => (
+            <Template themeMode={themeMode} setThemeMode={setThemeMode} />
           )}
         />
       </Router>

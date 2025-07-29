@@ -1,0 +1,4 @@
+@font-face {
+  font-family: 'HarmonicBabel';
+  src: url('./assets/fonts/harmonic-babel.woff2') format('woff2');
+}

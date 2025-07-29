@@ -14,6 +14,9 @@ declare module '@suid/material/styles' {
     neonBlue: {
       main: string;
     };
+    redGradient?: {
+      main: string;
+    };
   }
 
   interface PaletteOptions {
@@ -29,13 +32,13 @@ declare module '@suid/material/styles' {
     neonBlue?: {
       main: string;
     };
+    redGradient?: {
+      main: string;
+    };
   }
 }
 
 export const lightTheme = createTheme({
-  body: {
-    background: '#FFFFFF', // Light background color
-  },
   palette: {
     mode: 'light',
     primary: {
@@ -60,12 +63,14 @@ export const lightTheme = createTheme({
     neonBlue: {
       main: '#00BFFF', // Deep Sky Blue
     },
+    redGradient: {
+      main: 'linear-gradient(to bottom, #DC143C, rgba(220, 20, 60, 0.7))', // Improved gradient direction
+    },
   },
   typography: {
     fontFamily: '"Orbitron", "Roboto", sans-serif',
     h1: {
       fontWeight: 700,
-      // textShadow: '0 0 5px #00FFFF',
     },
     h2: {
       fontWeight: 600,
@@ -78,11 +83,11 @@ export const lightTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: '12px', // Rounded corners
-          boxShadow: '0 0 10px rgba(0, 191, 255, 0.3)', // Using neonBlue
+          borderRadius: '12px',
+          boxShadow: '0 0 10px rgba(0, 191, 255, 0.3)',
           transition: 'box-shadow 0.3s ease, transform 0.2s ease',
           '&:hover': {
-            boxShadow: '0 0 20px rgba(0, 191, 255, 0.5)', // Using neonBlue
+            boxShadow: '0 0 20px rgba(0, 191, 255, 0.5)',
             transform: 'scale(1.05)',
           },
         },
@@ -94,7 +99,7 @@ export const lightTheme = createTheme({
           color: 'inherit',
           border: 'none',
           borderRadius: 0,
-        }
+        },
       },
     },
     MuiAppBar: {
@@ -116,7 +121,7 @@ export const lightTheme = createTheme({
         root: {
           backgroundColor: '#FFFFFF',
           border: '1px solid rgba(149, 117, 205, 0.2)',
-          borderRadius: '16px', // Rounded corners
+          borderRadius: '16px',
         },
       },
     },
@@ -152,14 +157,16 @@ export const darkTheme = createTheme({
       main: '#FF00FF',
     },
     neonBlue: {
-      main: '#00BFFF', // Deep Sky Blue
+      main: '#00BFFF',
+    },
+    redGradient: { // Fixed capitalization
+      main: 'linear-gradient(to bottom, #DC143C, rgba(220, 20, 60, 0.7))',
     },
   },
   typography: {
     fontFamily: '"Orbitron", "Roboto", sans-serif',
     h1: {
       fontWeight: 700,
-      // textShadow: '0 0 5px #00FFFF',
     },
     h2: {
       fontWeight: 600,
@@ -172,11 +179,11 @@ export const darkTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: '12px', // Rounded corners
-          boxShadow: '0 0 10px rgba(0, 191, 255, 0.3)', // Using neonBlue
+          borderRadius: '12px',
+          boxShadow: '0 0 10px rgba(0, 191, 255, 0.3)',
           transition: 'box-shadow 0.3s ease, transform 0.2s ease',
           '&:hover': {
-            boxShadow: '0 0 20px rgba(0, 191, 255, 0.5)', // Using neonBlue
+            boxShadow: '0 0 20px rgba(0, 191, 255, 0.5)',
             transform: 'scale(1.05)',
           },
         },
@@ -188,10 +195,9 @@ export const darkTheme = createTheme({
           color: 'inherit',
           border: 'none',
           borderRadius: 0,
-        }
+        },
       },
     },
-
     MuiAppBar: {
       styleOverrides: {
         root: {
@@ -211,7 +217,7 @@ export const darkTheme = createTheme({
         root: {
           backgroundColor: '#1E1E1E',
           border: '1px solid rgba(149, 117, 205, 0.3)',
-          borderRadius: '16px', // Rounded corners
+          borderRadius: '16px',
         },
       },
     },

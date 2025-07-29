@@ -1,8 +1,8 @@
 import { Component } from 'solid-js';
-import {  Box } from '@suid/material';
+import { Container, Grid, Box } from '@suid/material';
 import Header from '../components/Header/Header';
-import HeroSection from '../components/HeroSection/HeroSection';
 import ProviderCardsSection from '../components/ProviderCardsSection/ProviderCardsSection';
+import AnnouncementBanner from '../components/ProviderCardsSection/AnnouncementBanner';
 import Footer from '../components/Template/Footer';
 
 interface HomeProps {
@@ -15,7 +15,8 @@ const Home: Component<HomeProps> = (props) => {
     <>
       <Header themeMode={props.themeMode} setThemeMode={props.setThemeMode} />
       <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <HeroSection />
+        <AnnouncementBanner />
+        <ProviderCardsSection />
         <Footer />
       </Box>
     </>
