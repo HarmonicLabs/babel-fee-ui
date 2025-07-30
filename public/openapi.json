@@ -44,18 +44,16 @@
             "description": "Successful response",
             "content": {
               "application/json": {
+              "example": {
+                "redeemerDataHex": "d8799fd8799fd8799f5820b9f94a862598466797f1b5230ef4483f3aca18521a4820a1dfaf09867973ad8100ff581cd4fece6b39f7cd78a3f036b2ae6508c13524b863922da80f68dd9ab747504c415354494b1a007d27d21a02000000d8799f1b000001985a789ad3ffff58400183c476f60b960ad0fd7ead10633e25c04213a6838c889d20971e5d91eceb24657f16eacba5abcb80a43e5c2be52164fe1d404897ae7dafb0a033ff58bc5d07ff",
+                "utxo": {
+                  "txOutRef": "b9f94a862598466797f1b5230ef4483f3aca18521a4820a1dfaf09867973ad81#0",
+                  "resolvedCborHex": "a200581d70c36ada791297fc17a8be4e7e296432ffdc4dd68784d4d47aedb8fc5d01821a0091b8b0a1581ce16c2dc8ae937e8d3790c7fd7168d7b994621ba14ca11415f39fed72a1434d494e1a14f66f0b"
+                },
+                "expirationTime": 1753864510163,
+                "tokenAmount": 8202194
+              },
                 "schema": { "type": "object" }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid input",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": { "error": { "type": "string" } }
-                }
               }
             }
           }
