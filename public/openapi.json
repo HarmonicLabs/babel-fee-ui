@@ -1,0 +1,159 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Babel Fee API",
+    "version": "1.0.0",
+    "description": "How to use Babel Fees API"
+  },
+  "servers": [
+    {
+      "url": "https://babelfeesapi.onchainapps.io",
+      "description": "Production server"
+    },
+    {
+      "url": "http://localhost:8080",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/input": {
+      "post": {
+        "summary": "Create redemer info for babel fee TX.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["unit"],
+                "properties": {
+                  "unit": { "type": "string" },
+                  "expireAfter": { "type": "integer" },
+                  "lovelacesFee": { "type": "string" }
+                }
+              },
+              "example": {
+                "unit": "e16c2dc8ae937e8d3790c7fd7168d7b994621ba14ca11415f39fed724d494e",
+                "lovelacesFee": "2000000"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "error": { "type": "string" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/estimate": {
+      "post": {
+        "summary": "Estimate token fee",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["unit"],
+                "properties": {
+                  "unit": { "type": "string" },
+                  "expireAfter": { "type": "integer" },
+                  "lovelacesFee": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "tokenFee": { "type": "string" } }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "error": { "type": "string" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tokens": {
+      "get": {
+        "summary": "Get supported tokens for babel fees",
+        "responses": {
+          "200": {
+            "description": "List of supported tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/script/inline": {
+      "get": {
+        "summary": "Get inline script",
+        "responses": {
+          "200": {
+            "description": "Inline script data",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/script/refInput": {
+      "get": {
+        "summary": "Get reference input script",
+        "responses": {
+          "200": {
+            "description": "Reference input script data",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

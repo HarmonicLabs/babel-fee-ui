@@ -6,7 +6,7 @@ import { darkTheme, lightTheme } from "../theme";
 import Home from "./Home";
 import Demo from "./Demo";
 import Template from './Template';
-
+import SwaggerDocs from "./SwaggerDocs"
 const App: Component = () => {
   const [themeMode, setThemeMode] = makePersisted(
     createSignal<"dark" | "light">("dark"),
@@ -39,6 +39,12 @@ const App: Component = () => {
           path="/template"
           component={() => (
             <Template themeMode={themeMode} setThemeMode={setThemeMode} />
+          )}
+        />
+        <Route
+          path="/swagger"
+          component={() => (
+            <SwaggerDocs themeMode={themeMode} setThemeMode={setThemeMode} />
           )}
         />
       </Router>

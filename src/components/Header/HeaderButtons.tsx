@@ -17,14 +17,7 @@ const HeaderButtons: Component = () => {
         flexGrow: 7
       }}
     >
-      <Button 
-        variant="text" 
-        component="a"
-        href="https://babelfeesapi.onchainapps.io/openapi/api-docs.html" // External URL
-        target="_blank" // Open in new tab
-        rel="noopener noreferrer" // Security for _blank
-        endIcon={<IoDocumentText />} 
-      >
+      <Button variant="text" component={A} href="/swagger" color="primary" endIcon={<IoDocumentText />} >
         Docs/API
       </Button>
       <Button variant="text" color="primary" endIcon={<SiGithub />} >
