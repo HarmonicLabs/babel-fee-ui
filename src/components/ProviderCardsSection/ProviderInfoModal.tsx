@@ -287,7 +287,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
         sx={{
           '& .MuiPaper-root': {
             borderRadius: '16px',
-            background: (theme) => theme.palette.mode === 'dark' ? '#1a1a2e' : '#ffffff',
+            background: (theme: any) => theme.palette.mode === 'dark' ? '#1a1a2e' : '#ffffff',
             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
             padding: '16px',
             maxWidth: '600px',
@@ -300,8 +300,8 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
             textAlign: 'center',
             fontWeight: 700,
             fontSize: '1.5rem',
-            color: (theme) => theme.palette.text.primary,
-            background: (theme) => theme.palette.mode === 'dark' ? 'linear-gradient(180deg, #2a2a4e 0%, #1a1a2e 100%)' : 'linear-gradient(180deg, #f5f5f5 0%, #ffffff 100%)',
+            color: (theme: any) => theme.palette.text.primary,
+            background: (theme: any) => theme.palette.mode === 'dark' ? 'linear-gradient(180deg, #2a2a4e 0%, #1a1a2e 100%)' : 'linear-gradient(180deg, #f5f5f5 0%, #ffffff 100%)',
             borderRadius: '12px 12px 0 0',
             padding: '16px 24px',
           }}
@@ -311,16 +311,16 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
         </Stack>
         </DialogTitle>
         <DialogContent sx={{ padding: '24px' }}>
-          <DialogContentText
+            <DialogContentText
             sx={{
               textAlign: 'center',
               marginBottom: '16px',
-              color: (theme) => theme.palette.text.secondary,
+              color: (theme: any) => theme.palette.text.secondary,
               fontSize: '1rem',
             }}
-          >
+            >
             Select token to pay fee with.
-          </DialogContentText>
+            </DialogContentText>
           <List sx={{ padding: 0 }}>
             <For each={tokens()}>
               {(token) => {
@@ -330,7 +330,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
                     sx={{
                       marginBottom: '16px',
                       borderRadius: '12px',
-                      background: (theme) => theme.palette.mode === 'dark' ? '#242444' : '#f8f9fa',
+                      background: (theme: any) => theme.palette.mode === 'dark' ? '#242444' : '#f8f9fa',
                       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                       transition: 'transform 0.2s, box-shadow 0.2s',
                       '&:hover': {
@@ -343,13 +343,13 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
                       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
                         <Typography
                           variant="h6"
-                          sx={{ fontWeight: 600, color: (theme) => theme.palette.text.primary }}
+                          sx={{ fontWeight: 600, color: (theme: any) => theme.palette.text.primary }}
                         >
                           {toUtf8(fromHex(token.nameHex))}
                         </Typography>
                         <Typography
                           variant="body2"
-                          sx={{ color: (theme) => theme.palette.text.secondary, wordBreak: 'break-all' }}
+                          sx={{ color: (theme: any) => theme.palette.text.secondary, wordBreak: 'break-all' }}
                         >
                           Policy: {token.policyHex.slice(0, 10)}...{token.policyHex.slice(-10)}
                         </Typography>
@@ -370,7 +370,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
                             <Typography
                               variant="body2"
                               sx={{
-                                color: (theme) => theme.palette.mode === 'dark' ? '#ffab91' : '#f57c00',
+                                color: (theme: any) => theme.palette.mode === 'dark' ? '#ffab91' : '#f57c00',
                                 marginBottom: '12px',
                               }}
                             >
@@ -408,7 +408,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
             </For>
             {tokens().length === 0 && (
               <ListItem sx={{ justifyContent: 'center' }}>
-                <Typography variant="body1" sx={{ color: (theme) => theme.palette.text.secondary }}>
+                <Typography variant="body1" sx={{ color: (theme: any) => theme.palette.text.secondary }}>
                   No tokens available
                 </Typography>
               </ListItem>
@@ -423,10 +423,10 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
               padding: '8px 24px',
               textTransform: 'none',
               fontWeight: 600,
-              color: (theme) => theme.palette.text.secondary,
-              border: (theme) => `1px solid ${theme.palette.divider}`,
+              color: (theme: any) => theme.palette.text.secondary,
+              border: (theme: any) => `1px solid ${theme.palette.divider}`,
               '&:hover': {
-                background: (theme) => theme.palette.mode === 'dark' ? '#2a2a4e' : '#f5f5f5',
+                background: (theme: any) => theme.palette.mode === 'dark' ? '#2a2a4e' : '#f5f5f5',
               },
             }}
           >

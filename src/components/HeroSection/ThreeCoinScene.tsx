@@ -2,12 +2,14 @@ import { Component, createSignal, createEffect, onCleanup } from 'solid-js';
 import * as THREE from 'three';
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 
+
 export const ThreeCoinScene: Component = () => {
   let container: HTMLDivElement | undefined;
   const [isLoaded, setIsLoaded] = createSignal<boolean>(false);
   const coinGroups: THREE.Group[] = []; // Store coin groups for animation
   const slideStates = [10, 10, 10]; // Track slide position for each coin
-
+  let startTime = performance.now();
+  
   createEffect(() => {
     if (!container) return;
 
@@ -54,7 +56,7 @@ export const ThreeCoinScene: Component = () => {
 
     camera.position.z = 3;
 
-    let startTime = performance.now();
+   
     const animate = () => {
       requestAnimationFrame(animate);
       if (isLoaded()) {

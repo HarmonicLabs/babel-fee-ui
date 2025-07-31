@@ -1,4 +1,4 @@
-import { TxBuilder, TxOut, UTxO, defaultProtocolParameters, defaultPreprodGenesisInfos, ProtocolParameters, fromHex, Value, Hash28, Script, Credential, Address, toHex } from "@harmoniclabs/buildooor";
+import { TxBuilder, TxOut, UTxO, defaultProtocolParameters, defaultPreprodGenesisInfos, ProtocolParameters, fromHex, Hash28, Script, Credential, Address, toHex, Value, IValue } from "@harmoniclabs/buildooor";
 import { blockfrostPreProd } from "../../utils/blockfrost";
 import adaptedProtocolParams from "./blockfrost-like.protocolParams.preprod.json";
 import { getUtxosWithNeededAssets, countTokenQuantity } from "../../utils/utxoAssetTools";
@@ -7,18 +7,8 @@ interface RefInput {
     utxoRef: string;
     resolvedHex: string;
 };
-interface Asset {
-    name: Uint8Array;
-    quantity: string;
-};
-interface Policy {
-    policy: Uint8Array;
-    assets: Asset[];
-};
-interface Resolved {
-    value: Value;
-    address: string;
-};
+
+
 // Remove local Utxo interface to use the one from @harmoniclabs/buildooor
 
 export async function babelFeeTx(
@@ -86,7 +76,7 @@ export async function babelFeeTx(
         ),
     );
     
-    console.log("redeenerDataHex: ", redeemerDataHex,  "\n resolvedBabelOut: ", resolvedBabelOut, "\n tokenAmtToSend: ", tokenAmtToSend);
+    console.log("redeenerDataHex: ", redeemerDataHex,  "\n resolvedBabelOut: ", resolvedBabelOut, "\n tokenAmtToSend: ", tokenAmtToSend, "\n outValue: ", outValue);
 
     try{
         const tx = txBuilder.buildSync({
@@ -129,7 +119,7 @@ export async function babelFeeTx(
         const signedTx = await walletApi.signTx(tx.toCbor().toString());
         // console.log("Signed Tx: ", signedTx);
         // console.log("tx: ", tx);
-        console.log("Signed Tx: ", tx.toCbor().toString());
+        console.log("Signed Tx: ", signedTx);
         const txHash = await walletApi.submitTx(signedTx);
         console.log("Transaction Hash: ", txHash);
         return({

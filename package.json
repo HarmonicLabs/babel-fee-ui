@@ -16,7 +16,7 @@
     "@types/swagger-ui": "^5.21.1",
     "@types/swagger-ui-dist": "^3.30.6",
     "@types/three": "^0.178.1",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.2",
     "vite": "^6.3.5",
     "vite-plugin-node-polyfills": "^0.24.0",
     "vite-plugin-solid": "^2.11.8",
