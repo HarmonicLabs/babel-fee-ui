@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+    viewBox='0 0 1000 1000'
+    style="background-color:#0000"
+>
+    <g>
+        <path
+            stroke='red'
+            stroke-width="1"
+            fill='none'
+            stroke-linecap="round"
+            d="M 100 500 C 473.84634363911573 -823.1893490123009 526.1536563608843 1823.189349012301 900 500"
+        />
+        <path
+            stroke='red'
+            stroke-width="2"
+            fill='none'
+            stroke-linecap="round"
+            d="M 101 500 C 473.91172778001794 -599.9011463664751 526.0882722199821 1599.9011463664751 899 500"
+        />
+        <path
+            stroke='red'
+            stroke-width="5"
+            fill='none'
+            stroke-linecap="round"
+            d="M 102 500 C 473.97711192092015 -377.7156015114929 526.0228880790798 1377.7156015114929 898 500"
+        />
+
+        <path
+            stroke='red'
+            stroke-width="10"
+            fill='none'
+            stroke-linecap="round"
+            d="M 105 500 C 474.1732643436268 -153.32474107482358 525.8267356563732 1153.3247410748236 895 500"
+        />
+        <path
+            stroke='red'
+            stroke-width="20"
+            fill='none'
+            stroke-linecap="round"
+            d="M 110 500 C 474.50018504813784 69.96346157100226 525.4998149518622 930.0365384289978 890 500"
+        />
+    </g>
+</svg>

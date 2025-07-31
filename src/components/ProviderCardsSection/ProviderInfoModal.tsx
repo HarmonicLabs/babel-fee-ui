@@ -326,7 +326,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
               {(token) => {
                 const tokenId = token.policyHex + token.nameHex;
                 return (
-                  <Card
+                  toUtf8(fromHex(token.nameHex)) === "MIN" && <Card
                     sx={{
                       marginBottom: '16px',
                       borderRadius: '12px',

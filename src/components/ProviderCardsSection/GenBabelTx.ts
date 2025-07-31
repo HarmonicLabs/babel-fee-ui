@@ -68,18 +68,16 @@ export async function babelFeeTx(
     //console.log("assetToSend: ", assetToSend);
 
     const input = parsedUtxos.find((u: any) => u.resolved.value.lovelaces > 5_000_000)
-    console.log("input: ", input);
+    // console.log("input: ", input);
 
     const collaterals = await walletApi.getCollateral();
     //console.log("collaterals: ", collaterals);
     //console.log("utxo ref: ", scriptRefInput.utxoRef.split("#")[0],  Number(scriptRefInput.utxoRef.split("#")[1]));
 
-    console.log("resolvedBabelOut.value.lovelaces: ", resolvedBabelOut.value.lovelaces)
-
     const outValue = Value.add(
         Value.sub(
             resolvedBabelOut.value,
-            Value.lovelaces( BigInt(fee)  ),
+            Value.lovelaces(fee),
         ),
         Value.singleAsset(
             new Hash28(tokenPlicyID),
@@ -87,6 +85,8 @@ export async function babelFeeTx(
             BigInt(tokenAmtToSend)
         ),
     );
+    
+    console.log("redeenerDataHex: ", redeemerDataHex,  "\n resolvedBabelOut: ", resolvedBabelOut, "\n tokenAmtToSend: ", tokenAmtToSend);
 
     try{
         const tx = txBuilder.buildSync({
@@ -116,6 +116,7 @@ export async function babelFeeTx(
                 new TxOut({
                     address: resolvedBabelOut.address,
                     value: outValue
+                    
                 })
             ],
             // Hard coded for testing
@@ -126,9 +127,11 @@ export async function babelFeeTx(
         });
                
         const signedTx = await walletApi.signTx(tx.toCbor().toString());
-        console.log("Signed Tx: ", signedTx);
-        console.log("tx: ", tx);
+        // console.log("Signed Tx: ", signedTx);
+        // console.log("tx: ", tx);
         console.log("Signed Tx: ", tx.toCbor().toString());
+        const txHash = await walletApi.submitTx(signedTx);
+        console.log("Transaction Hash: ", txHash);
         return({
             status: "success",
             message: "Transaction Success: \n" + tx.hash.toString(),
