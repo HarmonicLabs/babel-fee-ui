@@ -5,7 +5,7 @@
       "name": "solidts-template",
       "dependencies": {
         "@harmoniclabs/blockfrost-pluts": "^0.2.6",
-        "@harmoniclabs/buildooor": "0.1.14",
+        "@harmoniclabs/buildooor": "^0.1.19",
         "@solidjs/router": "^0.15.3",
         "@suid/css": "^0.4.1",
         "@suid/icons-material": "^0.9.0",
@@ -187,7 +187,7 @@
 
     "@harmoniclabs/blockfrost-pluts": ["@harmoniclabs/blockfrost-pluts@0.2.6", "", { "dependencies": { "@harmoniclabs/buildooor": "^0.1.15", "@harmoniclabs/cardano-costmodels-ts": "^1.3.0", "@harmoniclabs/crypto": "0.3.0", "@harmoniclabs/obj-utils": "^1.0.0", "@harmoniclabs/uint8array-utils": "^1.0.4" }, "peerDependencies": { "@harmoniclabs/bytestring": "^1.0.0", "@harmoniclabs/cbor": "^1.6.6", "@harmoniclabs/plutus-data": "^1.2.6" } }, "sha512-7ailzuAo/kG2rlW+r48xUiU/wVL+7xEWsCPBTwcHiRMZqli28aTKfg24QaFe/T13b/KUh+/HeADPvfB6zbJwpQ=="],
 
-    "@harmoniclabs/buildooor": ["@harmoniclabs/buildooor@0.1.14", "", { "dependencies": { "@harmoniclabs/bigint-utils": "^1.0.0", "@harmoniclabs/bip32_ed25519": "^0.1.3", "@harmoniclabs/bytestring": "^1.0.0", "@harmoniclabs/cardano-costmodels-ts": "^1.3.0", "@harmoniclabs/cardano-ledger-ts": "^0.4.0-dev10", "@harmoniclabs/cbor": "^1.6.6", "@harmoniclabs/crypto": "^0.3.0", "@harmoniclabs/obj-utils": "^1.0.0", "@harmoniclabs/pair": "^1.0.0", "@harmoniclabs/plutus-data": "^1.2.6", "@harmoniclabs/plutus-machine": "^2.1.1", "@harmoniclabs/uint8array-utils": "^1.0.4", "@harmoniclabs/uplc": "^1.4.1" } }, "sha512-KG1gq/YTbbCera/Au8YLWIRUUoDQoEMJ6KVhNP/cCElEFDUHNhFgn6EJF7/aXdIrljV+/vyffqWJI27zpOFV5g=="],
+    "@harmoniclabs/buildooor": ["@harmoniclabs/buildooor@0.1.19", "", { "dependencies": { "@harmoniclabs/bigint-utils": "^1.0.0", "@harmoniclabs/bip32_ed25519": "^0.1.3", "@harmoniclabs/bytestring": "^1.0.0", "@harmoniclabs/cardano-costmodels-ts": "^1.3.0", "@harmoniclabs/cardano-ledger-ts": "^0.4.0-dev14", "@harmoniclabs/cbor": "^1.6.6", "@harmoniclabs/crypto": "^0.3.0", "@harmoniclabs/obj-utils": "^1.0.0", "@harmoniclabs/pair": "^1.0.0", "@harmoniclabs/plutus-data": "^1.2.6", "@harmoniclabs/plutus-machine": "^2.1.1", "@harmoniclabs/uint8array-utils": "^1.0.4", "@harmoniclabs/uplc": "^1.4.1" } }, "sha512-sZn0vthx9JIZDl/6vnCiCiBnCwXn1HemI3uk67SExgzOE0G5MNACqP3dp871WxHMPafvOtNG2dSgZwVRXRZaGw=="],
 
     "@harmoniclabs/bytestring": ["@harmoniclabs/bytestring@1.0.0", "", { "dependencies": { "@harmoniclabs/uint8array-utils": "^1.0.0" } }, "sha512-d5m10O0okKc6QNX0pSRriFTkk/kNMnMBGbo5X3kEZwKaXTI4tDVoTZBL7bwbYHwOEdSxWJjVtlO9xtB7ZrYZNg=="],
 
@@ -1168,6 +1168,8 @@
     "babel-plugin-jsx-dom-expressions/@babel/helper-module-imports": ["@babel/helper-module-imports@7.18.6", "", { "dependencies": { "@babel/types": "^7.18.6" } }, "sha512-0NFvs3VkuSYbFi1x2Vd6tKrywq+z/cLeYC/RJNFrIX/30Bf5aiGYbtvGXolEktzJH8o5E5KJ3tT+nkxuuZFVlA=="],
 
     "browserify-sign/readable-stream": ["readable-stream@2.3.8", "", { "dependencies": { "core-util-is": "~1.0.0", "inherits": "~2.0.3", "isarray": "~1.0.0", "process-nextick-args": "~2.0.0", "safe-buffer": "~5.1.1", "string_decoder": "~1.1.1", "util-deprecate": "~1.0.1" } }, "sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA=="],
+
+    "cardano-wallet-connect-solidjs-component/@harmoniclabs/buildooor": ["@harmoniclabs/buildooor@0.1.14", "", { "dependencies": { "@harmoniclabs/bigint-utils": "^1.0.0", "@harmoniclabs/bip32_ed25519": "^0.1.3", "@harmoniclabs/bytestring": "^1.0.0", "@harmoniclabs/cardano-costmodels-ts": "^1.3.0", "@harmoniclabs/cardano-ledger-ts": "^0.4.0-dev10", "@harmoniclabs/cbor": "^1.6.6", "@harmoniclabs/crypto": "^0.3.0", "@harmoniclabs/obj-utils": "^1.0.0", "@harmoniclabs/pair": "^1.0.0", "@harmoniclabs/plutus-data": "^1.2.6", "@harmoniclabs/plutus-machine": "^2.1.1", "@harmoniclabs/uint8array-utils": "^1.0.4", "@harmoniclabs/uplc": "^1.4.1" } }, "sha512-KG1gq/YTbbCera/Au8YLWIRUUoDQoEMJ6KVhNP/cCElEFDUHNhFgn6EJF7/aXdIrljV+/vyffqWJI27zpOFV5g=="],
 
     "create-ecdh/bn.js": ["bn.js@4.12.2", "", {}, "sha512-n4DSx829VRTRByMRGdjQ9iqsN0Bh4OolPsFnaZBLcbi8iXcB+kJ9s7EnRt4wILZNV3kPLHkRVfOc/HvhC3ovDw=="],
 
