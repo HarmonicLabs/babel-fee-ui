@@ -14,7 +14,8 @@ const HeaderButtons: Component = () => {
         justifyContent: 'center',
         gap: '20px',
         backgroundColor: theme.palette.background.paper,
-        flexGrow: 7
+        flexGrow: 7,
+        marginRight: '20px',
       }}
     >
       <Button variant="text" component={A} href="/swagger" color="primary" endIcon={<IoDocumentText />} >
