@@ -1,4 +1,4 @@
-import { TxBuilder, TxOut, UTxO, defaultProtocolParameters, defaultPreprodGenesisInfos, ProtocolParameters, fromHex, Hash28, Script, Credential, Address, toHex, Value, IValue } from "@harmoniclabs/buildooor";
+import { TxBuilder, TxOut, UTxO, defaultProtocolParameters, defaultPreprodGenesisInfos, ProtocolParameters, fromHex, Hash28, Script, Credential, Address, toHex, Value, IValue, TxWitnessSet } from "@harmoniclabs/buildooor";
 import { blockfrostPreProd } from "../../utils/blockfrost";
 import adaptedProtocolParams from "./blockfrost-like.protocolParams.preprod.json";
 import { getUtxosWithNeededAssets, countTokenQuantity } from "../../utils/utxoAssetTools";
@@ -115,12 +115,20 @@ export async function babelFeeTx(
             changeAddress: changeAddressBase,
             invalidAfter: txBuilder.posixToSlot(expirationTime)
         });
-               
-        const signedTx = await walletApi.signTx(tx.toCbor().toString());
-        // console.log("Signed Tx: ", signedTx);
-        // console.log("tx: ", tx);
-        console.log("Signed Tx: ", signedTx);
-        const txHash = await walletApi.submitTx(signedTx);
+        
+        const wits = TxWitnessSet.fromCbor(
+            await walletApi.signTx(
+                // signTx expects the entire transaction by standard (not only the body ¯\_(ツ)_/¯)
+                tx.toCbor().toString(),
+                true
+            )
+        );
+        for( const wit of wits.vkeyWitnesses! ){
+            tx.addVKeyWitness( wit );
+        };
+        const txSignedCBOR = tx.toCbor().toString();
+        console.log("txCBOR", txSignedCBOR);
+        const txHash = await walletApi.submitTx(txSignedCBOR);
         console.log("Transaction Hash: ", txHash);
         return({
             status: "success",
