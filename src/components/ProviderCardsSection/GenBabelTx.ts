@@ -130,10 +130,11 @@ export async function babelFeeTx(
         console.log("txCBOR", txSignedCBOR);
         const txHash = await walletApi.submitTx(txSignedCBOR);
         console.log("Transaction Hash: ", txHash);
-        return({
+        return {
             status: "success",
-            message: "Transaction Success: \n" + tx.hash.toString(),
-        });
+            message: tx.hash.toString(),
+            txUrl: `https://preprod.cexplorer.io/tx/${tx.hash.toString()}`
+        };
     }catch(error) {
         console.log("Error building transaction: ", error);
         return({

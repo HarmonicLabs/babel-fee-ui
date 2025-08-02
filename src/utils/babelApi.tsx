@@ -33,7 +33,11 @@ class BabelApiClient {
         });
         if (!response.ok) {
             const errorBody = await response.text();
-            throw new Error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+            console.error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+            return({
+                status: "error",
+                message: errorBody
+            });
         }
         return await response.json();
     }
@@ -48,7 +52,11 @@ class BabelApiClient {
         });
         if (!response.ok) {
             const errorBody = await response.text();
-            throw new Error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+            console.error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+            return({
+                status: "error",
+                message: errorBody
+            });
         }
         return await response.json();
     }
@@ -63,7 +71,11 @@ class BabelApiClient {
         });
         if (!response.ok) {
             const errorBody = await response.text();
-            throw new Error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+            console.error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+            return({
+                status: "error",
+                message: errorBody
+            });
         }
         return await response.json();
     }
@@ -72,7 +84,11 @@ class BabelApiClient {
         const response = await fetch(`${this.baseUrl}/tokens`);
         if (!response.ok) {
             const errorBody = await response.text();
-            throw new Error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+            console.error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+            return({
+                status: "error",
+                message: errorBody
+            });
         }
         return await response.json();
     }
@@ -81,7 +97,11 @@ class BabelApiClient {
         const response = await fetch(`${this.baseUrl}/script/inline`);
         if (!response.ok) {
             const errorBody = await response.text();
-            throw new Error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+            console.error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+            return({
+                status: "error",
+                message: errorBody
+            });
         }
         return await response.json();
     }
@@ -89,8 +109,14 @@ class BabelApiClient {
     async getScriptRefInput(): Promise<any> {
         const response = await fetch(`${this.baseUrl}/script/refInput`);
         if (!response.ok) {
+            
             const errorBody = await response.text();
-            throw new Error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+            console.error(`HTTP error! status: ${response.status}, message: ${errorBody}`);
+            return({
+                status: "error",
+                message: errorBody
+            });
+
         }
         return await response.json();
     }

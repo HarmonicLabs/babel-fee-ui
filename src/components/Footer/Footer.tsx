@@ -5,8 +5,8 @@ const Footer: Component = () => {
   const theme = useTheme();
   const columns = [
     { title: 'Features', links: ['Tx Builders', 'Typescript', 'Decentralization'] },
-    { title: 'Resources', links: ['Docs', 'Analytics', 'Blog'] },
-    { title: 'Community', links: ['About', 'Contact', 'Support'] },
+    { title: 'Resources', links: ['Docs', 'Github' ] },
+    { title: 'Community', links: [] },
   ];
 
   return (

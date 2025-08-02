@@ -48,15 +48,18 @@ interface AssetCount {
   quantity: bigint;
 }
 
+interface Alert {
+  show: boolean;
+  type: 'success' | 'error' | 'warning' | 'info';
+  message: string | {
+    message: string | undefined;
+  };
+  txUrl?: string;
+}
+
 export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
   const [open, setOpen] = createSignal(false);
-  const [alert, setAlert ]= createSignal<{
-    show: boolean;
-    type: 'success' | 'error' | 'warning' | 'info';
-    message: string | {
-        message: string | undefined;
-    };
-  }>({
+  const [alert, setAlert ]= createSignal<Alert>({
         show: false,
         type: 'success',
         message: ''
@@ -138,6 +141,14 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
     babelApi.postInput({ unit: tokenId, lovelacesFee: fee })
       .then(response => {
         console.log('Script ref input:', response);
+        if(response.status && response.status == "error") {
+          setAlert({
+            show: true,
+            type: 'error',
+            message: JSON.parse(response.message).error + " please make sure provider has a funded Smart Wallet with ADA." || 'Error fetching script ref input'
+          });
+          return;
+        }
         setInput(response);
         setEnabled(true);
       })
@@ -217,7 +228,11 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
       .then(tx => {
         console.log('Tx Send:', tx);
         if (tx.status && ['success', 'error', 'warning', 'info'].includes(tx.status)) {
-          setAlert({ show: true, type: tx.status as 'success' | 'error' | 'warning' | 'info', message: typeof tx.message === 'string' ? tx.message : (tx.message as any)?.message || ''});
+          setAlert({ 
+            show: true, type: tx.status as 'success' | 'error' | 'warning' | 'info', 
+            message: typeof tx.message === 'string' ? tx.message : (tx.message as any)?.message || '',
+            txUrl: tx.txUrl || ''
+          });
         }
         tx.status === "success" && setInput({
           redeemerDataHex: '',
@@ -326,7 +341,7 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
               {(token) => {
                 const tokenId = token.policyHex + token.nameHex;
                 return (
-                  toUtf8(fromHex(token.nameHex)) === "MIN" && <Card
+                  toUtf8(fromHex(token.nameHex)) && <Card
                     sx={{
                       marginBottom: '16px',
                       borderRadius: '12px',
@@ -437,10 +452,19 @@ export const ProviderInfoModal: Component<ProviderInfoProps> = (props) => {
           <Alert
             severity={alert().type}
             onClose={() => setAlert({ show: false, type: 'success', message: '' })}
-            sx={{ position: 'absolute', top: 16, left: '50%', transform: 'translateX(-50%)', width: '90%' }}
+            sx={{ position: 'absolute', top: 16, left: '50%', transform: 'translateX(-50%)', width: '100%' }}
           >
             <AlertTitle>{alert().type === 'success' ? 'Success' : 'Error'}</AlertTitle>
-            {alert().message}
+            {
+              alert().txUrl ?
+                (
+                  <a href={alert().txUrl} target="_blank" rel="noopener noreferrer">
+                    {(typeof alert().message === 'string' ? alert().message : (alert().message as any)?.message) || 'CEXPLORER'}
+                  </a>
+                )
+                : 
+                (typeof alert().message === 'string' ? alert().message : (alert().message as any)?.message) || 'Transaction completed successfully.'
+            }
           </Alert>
         )}
       </Dialog>

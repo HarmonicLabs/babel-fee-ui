@@ -1,7 +1,8 @@
 import { Component } from 'solid-js';
 import { Box, Typography, Button, useTheme } from '@suid/material';
 import { ThreeCoinScene } from "./ThreeCoinScene";
-
+import { A } from "@solidjs/router";
+import { ImPacman } from 'solid-icons/im'
 
 const HeroSection: Component = () => {
   const theme = useTheme();
@@ -16,7 +17,7 @@ const HeroSection: Component = () => {
         alignItems: 'center',
         flexWrap: 'wrap',
         width: '80%',
-        margin: '20px auto',
+        margin: 'auto auto',
         borderRadius: '46px',
         minHeight: '700px',
       }}
@@ -28,16 +29,16 @@ const HeroSection: Component = () => {
         <Typography variant="body1" align="left" gutterBottom>
           Smart Contracts Powering Efficient Babel Fee Transactions
         </Typography>
-        {/*
+        <Typography variant="body1" align="left" gutterBottom>
+            Try our Demo on testnet right now
+          </Typography>
         <Box sx={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
-          <Button variant="contained" color="primary" size="large">
-            Get Started
-          </Button>
-          <Button variant="text" sx={{ textDecoration: 'underline' }}>
-            API
+
+          <Button variant="text" color="primary" component={A} href="/demo" endIcon={<ImPacman />} sx={{ margin: "-5 0"}}>
+            Demo
           </Button>
         </Box>
-        */}
+        
       </Box>
       <Box
         sx={{

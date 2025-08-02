@@ -18,13 +18,13 @@ const HeaderButtons: Component = () => {
         marginRight: '20px',
       }}
     >
-      <Button variant="text" component={A} href="/swagger" color="primary" endIcon={<IoDocumentText />} >
+      <Button variant="text" color="primary" component={A} href="/swagger" endIcon={<IoDocumentText /> } >
         Docs/API
       </Button>
       <Button variant="text" color="primary" endIcon={<SiGithub />} >
         Github
       </Button>
-      <Button variant="text" component={A} href="/demo" color="primary" endIcon={<ImPacman />}>
+      <Button variant="text" color="primary" component={A} href="/demo" endIcon={<ImPacman />}>
         Demo
       </Button>
 

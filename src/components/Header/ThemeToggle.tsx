@@ -11,7 +11,7 @@ interface ThemeToggleProps {
 const ThemeToggle: Component<ThemeToggleProps> = (props) => {
   return (
     <Button
-      color="inherit"
+      color="primary"
       onClick={() => props.setThemeMode(props.themeMode() === 'dark' ? 'light' : 'dark')}
       aria-label="Toggle theme"
     >

@@ -42,12 +42,12 @@ export const ThreeCoinScene: Component = () => {
         }
       });
 
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 6; i++) {
         const coinGroup = new THREE.Group(); // Group for each coin
         const coinInstance = model.clone();
         coinInstance.scale.set(0.9, 0.9, 0.9);
         coinGroup.add(coinInstance);
-        coinGroup.position.set(2 - i * 2, -0.4, -0.4); // Spread horizontally
+        coinGroup.position.set(1 - i * 2, .01, 0.4 - i * 2); // Spread horizontally
         scene.add(coinGroup);
         coinGroups.push(coinGroup);
       }

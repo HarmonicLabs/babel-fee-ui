@@ -25,14 +25,14 @@ const HeroText = styled('h1')({
 
 const Header: Component<HeaderProps> = (props) => {
   return (
-    <AppBar position="static" color="default" sx={{ height: '8%'}}>
-        <Toolbar sx={{ width: '70%', margin: "auto auto" }} >
+    <AppBar position="static" color="default" sx={{ height: '8%', width: "100%"}}>
+        <Toolbar sx={{ width: '90%'}} >
             <Typography sx={{ flexGrow: 1 }}>
               <HeroText>Babel Fees by Harmonic Labs</HeroText>
             </Typography>
             <HeaderButtons />
             <Box sx={{ display: "flex", gap: "10px" }}>
-                <Button color="inherit" component={A} href="/">
+                <Button variant="text" color="primary" component={A} href="/">
                     Home
                 </Button>	
                 <CardanoWalletConnect />
